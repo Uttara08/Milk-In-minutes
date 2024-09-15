@@ -1,0 +1,38 @@
+.sidenav-container {
+  height: auto;
+}
+
+.mat-sidenav-content {
+  min-height: 567.5px;
+  height: auto;
+  /* Sidenav Styles */
+
+}
+
+.sidenav {
+  width: 205px;
+  position: absolute;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+#home {
+  border: none;
+  margin-left: 80%;
+}
+
+.icon {
+  margin-right: 8px;
+}
+/* Sidenav Styles */
+.mat-sidenav {
+  background-color: orange; 
+}

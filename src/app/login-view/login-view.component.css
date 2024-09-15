@@ -1,0 +1,13 @@
+.form-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 100vh; /* Make container the full height of the viewport */
+}
+
+.login-form {
+  width: 300px; /* Adjust width as needed */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

@@ -1,0 +1,45 @@
+<mat-toolbar color="primary">
+  <button
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="drawer.toggle()"
+  >
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <app-header></app-header>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="'navigation'"
+    [mode]="'push'"
+    [opened]="false"
+  >
+    <mat-nav-list>
+      <a mat-list-item href="/">
+        <mat-icon class="icon">home</mat-icon>
+        Home
+      </a>
+      <a mat-list-item routerLink="/dairy-products-requests">
+        <mat-icon class="icon">shopping_cart</mat-icon>
+        Requested Orders
+      </a>
+      <a *ngIf="!isLoggedIn" mat-list-item routerLink="/login">
+        <mat-icon class="icon">login</mat-icon>
+        Login
+      </a>
+      <a *ngIf="isLoggedIn" mat-list-item (click)="logout()">
+        <mat-icon class="icon">logout</mat-icon>
+        Logout
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- Add Content Here -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container> 

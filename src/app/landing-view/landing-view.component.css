@@ -1,0 +1,35 @@
+.container {
+  display: flex; /* Allow children to be laid out in a row */
+  flex-wrap: wrap; /* Enable wrapping to multiple lines */
+  justify-content: space-around; /* Distribute space around items */
+}
+
+.search-bar, .category-filter {
+  width: 45%; /* Adjust as needed */
+  margin-bottom: 20px;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.product-card {
+  width: calc(25% - 20px); /* Account for margins */
+  margin: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+}
+
+.last-in-row {
+  margin-right: 0; /* Remove right margin on last item in row */
+}
+
+.product-img { 
+  width: 100%; 
+  height: auto;  
+}
+
+.mat-card-actions {
+  justify-content: center; /* Center the button */
+}
