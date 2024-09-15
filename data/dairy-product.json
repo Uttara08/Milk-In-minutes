@@ -203,6 +203,27 @@
         "category": "Ice Cream",
         "description": "Indulge in our Choco Chips Ice Cream, where velvety vanilla ice cream is swirled with generous chunks of rich chocolate. A satisfying treat for chocolate lovers!"
       }
+    },
+    {
+      "id": "c47a",
+      "name": "uttara",
+      "email": "",
+      "phone": 9458802511,
+      "quantity": 2,
+      "address": {
+        "street": "m",
+        "city": "meerut",
+        "state": "up",
+        "zipCode": "23456"
+      },
+      "product": {
+        "id": "2",
+        "name": "Choco Chips Ice Cream",
+        "price": 130,
+        "imageUrl": "assets/images/choco-chips-ice-cream.jpg",
+        "category": "Ice Cream",
+        "description": "Indulge in our Choco Chips Ice Cream, where velvety vanilla ice cream is swirled with generous chunks of rich chocolate. A satisfying treat for chocolate lovers!"
+      }
     }
   ]
 }

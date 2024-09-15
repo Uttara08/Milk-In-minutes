@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder,ValidationErrors, Validators, AbstractControl, ValidatorFn,FormGroup } from '@angular/forms';
 import { DairyProduct } from '../models/dairy-product';
 import { DairyProductService } from '../services/dairy-product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -36,37 +36,70 @@ export class OrderViewComponent implements OnInit {
     this.getProduct();
     this.setOrderDate();
   }
-  
+
   getProduct() {
-  const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
 
-  if (id) {
-    this.dairyProductService.getDairyProduct(+id).subscribe({
-      next: (product) => {
-        this.product = product;
-      },
-      error: (error) => {
-        console.error('Error fetching dairy product:', error);
-        this._snackBar.open('Error fetching dairy product. Please try again later.', 'Close', {
-          duration: 3000,
-          panelClass: ['mat-toolbar', 'mat-warn']
-        });
-        this.router.navigate(['/']);
+    if (id) {
+      this.dairyProductService.getDairyProduct(+id).subscribe({
+        next: (product) => {
+          this.product = product;
+        },
+        error: (error) => {
+          console.error('Error fetching dairy product:', error);
+          this._snackBar.open('Error fetching dairy product. Please try again later.', 'Close', {
+            duration: 3000,
+            panelClass: ['mat-toolbar', 'mat-warn']
+          });
+          this.router.navigate(['/']);
+        }
+      });
+    }
+  }
+
+  // Custom Validators
+  noLeadingSpaceValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value || '';
+      return value.startsWith(' ') ? { 'leadingSpace': true } : null;
+    };
+  }
+
+  alphabeticValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value || '';
+      const regex = /^[A-Za-z\s]*$/;
+      return !regex.test(value) ? { 'invalidCharacters': true } : null;
+    };
+  }
+  customEmailValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const email = control.value;
+      if (email && email.indexOf('@') > 0) {
+        const localPart = email.split('@')[0];
+        const valid = /^[A-Za-z]+/.test(localPart);
+        if (!valid) {
+          return { invalidEmailStart: true }; // Custom error if email does not start with an alphabet
+        }
       }
-    });
+      return null;
+    };
   }
-  }
-
 
   orderForm = this.formBuilder.group({
-    name: ['', Validators.required],
-    email: ['', Validators.email],
+    name: ['', [
+      Validators.required,
+      this.noLeadingSpaceValidator(),
+      this.alphabeticValidator()
+    ]],
+    emailId: ['', [Validators.required, Validators.email, this.customEmailValidator()]], // Email validators
+      
     phone: ['', [Validators.required, Validators.pattern('^[789][0-9]{9}$')]],
     quantity: [1, [Validators.required, Validators.min(1)]],
     address: this.formBuilder.group({
-      street: [''],
-      city: [''],
-      state: [''],
+      street: ['', Validators.required],
+      city: ['',Validators.required],
+      state: ['',Validators.required],
       zipCode: ['', Validators.required]
     })
   });
@@ -85,8 +118,7 @@ export class OrderViewComponent implements OnInit {
       this.orderService.addOrder(orderData).subscribe({
         next: order => {
           this._snackBar.open('Order placed successfully!', 'Close',
-          { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] }
-          );
+          { duration: 3000, panelClass: ['mat-toolbar', 'mat-primary'] });
           this.orderForm.reset(this.orderForm.value);
         },
         error: (error) => {
@@ -97,7 +129,7 @@ export class OrderViewComponent implements OnInit {
           });
           this.router.navigate(['/']);
         }
-      })
+      });
     }
   }
 
