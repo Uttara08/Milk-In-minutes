@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "server":"npx json-server  ./data/dairy-product.json",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
